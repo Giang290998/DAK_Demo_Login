@@ -40,12 +40,16 @@ function LoginRegister() {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
+    const [email, setEmail] = useState('');
+    const [phoneNum, setPhoneNum] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [dayOfBirth, setDayOfBirth] = useState('1');
     const [monthOfBirth, setMonthOfBirth] = useState('1');
     const [yearOfBirth, setYearOfBirth] = useState(new Date().getFullYear());
     const [avatar, setAvatar] = useState(null)
+    const [codeAuthen, setCodeAuthen] = useState(null);
+    const [accountType, setAccountType] = useState(null);
     const [thirdPartyInfor, setThirdPartyInfor] = useState(false);
     const [waitingResponseLogin, setWaitingResponseLogin] = useState(false);
     const [waitingResponseRegister, setWaitingResponseRegister] = useState(false)
@@ -151,6 +155,12 @@ function LoginRegister() {
         const passwordConfirm = event.target.value
         setPasswordConfirm(passwordConfirm)
     }, [])
+    const handleChangeEmail = useCallback((event) => {
+        setEmail(event.target.value)
+    },[])
+    const handleChangePhoneNum = useCallback((event) => {
+        setPhoneNum(event.target.value)
+    }, [])
     const handleBlurPassConfirm = useCallback(() => {
         if (passwordConfirm !== password) {
             setErrorStatusPassConfirm('Không trùng khớp với mật khẩu!')
@@ -230,35 +240,46 @@ function LoginRegister() {
         if ($('input[value="0"]:checked')) {
             sex = "0"
         }
-        const newUser = { id, password, firstName, lastName, sex, dateOfBirth, avatar }
-        if (avatar || (password === passwordConfirm && id && password && firstName && lastName && sex && dateOfBirth)) {
-            setWaitingResponseRegister(true)
-            try {
-                let res = await userAPI.createNewUser(newUser)
-                if (res.data) {
-                    setWaitingResponseRegister(false)
-                    switch (res.data.errCode) {
-                        case 0:
-                            if (avatar) {
-                                const res = await userAPI.loginWithThirdPartyInformation(id)
-                                saveInfoUser(res.data)
-                            } else {
-                                getInfoUser({ id, password }, dispatch)
-                            }
-                            break;
-    
-                        case 1:
-                            setErrorStatusId("Tên tài khoản đã tồn tại!")
-                            break;
-        
-                        default:
-                            break;
-                    }
-                }
-            } catch (error) {
-                console.log(error)
-            }
+        // const newUser = { id, password, email, phoneNum, firstName, lastName, sex, dateOfBirth, avatar }
+        const newUser = {
+            name: `${firstName+' '+lastName}`,
+            username: id,
+            email: email,
+            password: password,
+            phone_number: phoneNum,
+            account_type: accountType || 1,
+            birthday: dateOfBirth,
+            sex: sex ? +sex : null  
         }
+        console.log(newUser)
+        // if (avatar || (password === passwordConfirm && id && password && firstName && lastName && sex && dateOfBirth)) {
+        //     setWaitingResponseRegister(true)
+        //     try {
+        //         let res = await userAPI.createNewUser(newUser)
+        //         if (res.data) {
+        //             setWaitingResponseRegister(false)
+        //             switch (res.data.errCode) {
+        //                 case 0:
+        //                     if (avatar) {
+        //                         const res = await userAPI.loginWithThirdPartyInformation(id)
+        //                         saveInfoUser(res.data)
+        //                     } else {
+        //                         getInfoUser({ id, password }, dispatch)
+        //                     }
+        //                     break;
+    
+        //                 case 1:
+        //                     setErrorStatusId("Tên tài khoản đã tồn tại!")
+        //                     break;
+        
+        //                 default:
+        //                     break;
+        //             }
+        //         }
+        //     } catch (error) {
+        //         console.log(error)
+        //     }
+        // }
     }
     
     const handleLoginWithGoogle = useGoogleLogin({
@@ -272,6 +293,7 @@ function LoginRegister() {
                     saveInfoUser(res.data)
                     break;
                 case 1:
+                    setAccountType(3)
                     setAvatar(resGoogle.data.picture) 
                     setId(resGoogle.data.email)
                     setPassword(null)
@@ -293,6 +315,7 @@ function LoginRegister() {
                 saveInfoUser(res.data)
                 break;
             case 1:
+                setAccountType(2)
                 setAvatar(response.picture.data.url) 
                 setId(response.email)
                 setPassword(null)
@@ -474,6 +497,16 @@ function LoginRegister() {
                                             onBlur={handleBlurPassConfirm}
                                             onChange={handleChangePassConfirm}
                                         />
+                                        <TextInput 
+                                            type='text' placeholder='Email' inputId="email" 
+                                            title="Email"
+                                            onChange={handleChangeEmail}
+                                        />
+                                        <TextInput 
+                                            type='text' placeholder='Số điện thoại' inputId="phone-num" 
+                                            title="Số điện thoại" 
+                                            onChange={handleChangePhoneNum}
+                                        />
                                     </div>
                                 }
                                 <div className="create-info-wrapper">
@@ -539,7 +572,7 @@ function LoginRegister() {
                                         </select>
                                     </div>    
                                 </div>
-                                <div id="btn-register" onClick={() => handleRegister()} className="btn btn-register">
+                                <div id="btn-register" onClick={() => handleRegister(1)} className="btn btn-register">
                                 {
                                     waitingResponseRegister
                                     ?
