@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
+import './login_register.scss';
 
 // Configure Firebase.
 const config = {
