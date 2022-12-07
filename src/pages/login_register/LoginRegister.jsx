@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
+import './login_register.scss';
 
 // Configure Firebase.
 const config = {
@@ -33,7 +34,6 @@ function SignInScreen() {
   const [uid, setUid] = useState(null)
   const [name, setName] = useState(null)
   const [avatar, setAvatar] = useState(null)
-  const [accountType, setAccountType] = useState(null)
 
     console.log('Is Login:::', isSignedIn)
 
