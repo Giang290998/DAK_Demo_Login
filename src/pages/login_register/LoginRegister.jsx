@@ -11,6 +11,8 @@ import './login_register.scss';
 const config = {
   apiKey: 'AIzaSyAip4hecOJfi2iYN-iMBzWaCi9965XgBXg',
   authDomain: 'stech-login.firebaseapp.com',
+  // apiKey: 'AIzaSyAVlOYUZwSdx7WGcNdi37Z6DFlQ_dSAbmM',
+  // authDomain: 'gsocial-354613.firebaseapp.com',
   // ...
 };
 firebase.initializeApp(config);
