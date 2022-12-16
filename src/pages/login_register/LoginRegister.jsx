@@ -82,6 +82,7 @@ function SignInScreen() {
               }
             })
             .catch(error => {
+              console.log('Catch Login Error:::: ', error)
               setLoginCode(500)
               setError(error?.code)
             })
