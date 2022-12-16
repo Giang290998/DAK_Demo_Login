@@ -57,7 +57,7 @@ function SignInScreen() {
             const payload = {
               name: user.displayName,
               avatar: user.photoURL,
-              username: user.email,
+              username: user.email || user.uid,
               identity: user.uid,
               account_type,
               email: user.email
@@ -80,11 +80,6 @@ function SignInScreen() {
                   setUser(JSON.stringify(res.data.data.user))
                 }
               }
-            })
-            .catch(error => {
-              console.log(error)
-              setError(error)
-              setLoginCode(500)
             })
         }
     );
@@ -139,15 +134,14 @@ function SignInScreen() {
         </div> 
       }
       {
-        loginCode
-        ?
-        <a href="/" className='btn' onClick={() => firebase.auth().signOut()}>Sign-out</a>
-        :
+        !loginCode
+        &&
         <div className="btn pending">
           <h3 className="pending-status">Login</h3>
           <CircularProgress color='#fff'/>
         </div>
       }
+      <a href="/" className='btn' onClick={() => firebase.auth().signOut()}>Sign-out</a>
     </div>
   );
 }
