@@ -81,6 +81,10 @@ function SignInScreen() {
                 }
               }
             })
+            .catch(error => {
+              setLoginCode(500)
+              setError(error?.code)
+            })
         }
     );
     function getAccountType(type) {
