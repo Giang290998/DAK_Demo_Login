@@ -63,12 +63,12 @@ function SignInScreen() {
               email: user.email
             }
             setPayload(JSON.stringify(payload))
-            try {
-              const res = await axios.post(
-                'http://115.78.232.196:88/api/auth/login-social', 
-                payload, 
-                { headers: {'authorization': `Bearer ${await user.getIdToken()}`}}
-              )
+            axios.post(
+              'http://115.78.232.196:88/api/auth/login-social', 
+              payload, 
+              { headers: {'authorization': `Bearer ${await user.getIdToken()}`}}
+            )
+            .then(res => {
               console.log(res.data)
               if (res.data) {
                 setLoginCode(res.data.code)
@@ -80,11 +80,12 @@ function SignInScreen() {
                   setUser(JSON.stringify(res.data.data.user))
                 }
               }
-            } catch (error) {
+            })
+            .catch(error => {
               console.log(error)
               setError(error)
               setLoginCode(500)
-            }
+            })
         }
     );
     function getAccountType(type) {
