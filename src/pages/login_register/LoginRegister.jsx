@@ -42,8 +42,6 @@ function SignInScreen() {
   const [tokenResServer, setTokenResServer] = useState(null)
   const [user, setUser] = useState(null)
 
-    console.log('Is Login:::', isSignedIn)
-
   // Listen to the Firebase Auth state and set the local state.
   useEffect(() => {
     const unregisterAuthObserver = firebase.auth().onAuthStateChanged(async user => {
@@ -82,7 +80,7 @@ function SignInScreen() {
               }
             })
             .catch(error => {
-              console.log('Catch Login Error:::: ', error)
+              console.error('Catch Login Error:::: ', error)
               setLoginCode(500)
               setError(error?.code)
             })
