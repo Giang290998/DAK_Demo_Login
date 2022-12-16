@@ -82,6 +82,8 @@ function SignInScreen() {
               }
             } catch (error) {
               console.log(error)
+              setError(error)
+              setLoginCode(500)
             }
         }
     );
