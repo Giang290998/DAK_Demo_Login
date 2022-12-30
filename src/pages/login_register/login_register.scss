@@ -1,52 +1,49 @@
-.login {
+.btn.google-login {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    .token, .uid {
-        max-width: 600px;
-        margin-bottom: 10px;
+    appearance: none;
+    background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+    border: 0;
+    border-radius: 6px;
+    box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: "JetBrains Mono",monospace;
+    height: 48px;
+    justify-content: center;
+    line-height: 1;
+    list-style: none;
+    overflow: hidden;
+    padding-left: 16px;
+    padding-right: 16px;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transition: box-shadow .15s,transform .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow,transform;
+    font-size: 18px;
+    &:focus {
+        box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
     }
-    .btn {
-        display: block;
-        background-color: #EA4C89;
-        border-radius: 8px;
-        border-style: none;
-        box-sizing: border-box;
-        color: #FFFFFF;
-        cursor: pointer;
-        display: inline-block;
-        font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        font-size: 14px;
-        font-weight: 500;
-        height: fit-content;
-        max-width: 80vw;
-        line-height: 20px;
-        list-style: none;
-        margin: 0;
-        outline: none;
-        padding: 10px 16px;
-        position: relative;
-        text-align: center;
-        text-decoration: none;
-        transition: color 100ms;
-        &:hover {
-            background-color: #F082AC;
-        }
+
+    &:hover {
+        box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+        transform: translateY(-2px);
     }
-    .btn.pending {
-        background-color: gray;
-        height: fit-content;
-        .pending-status {
-            margin-bottom: 6px;
-        }
+
+    &:active {
+        box-shadow: #3c4fe0 0 3px 7px inset;
+        transform: translateY(2px);
     }
-    .btn.success {
-        display: block;
-        background-color: cadetblue;
-        cursor: auto;
-        .success-status {
-            width: 100%;
-        }
-    }
+}
+.token {
+    line-height: 30px;
+    padding-top: 10px;
 }
